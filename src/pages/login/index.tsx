@@ -1,3 +1,9 @@
+import { LoginForm } from "@widgets/login";
+
 export const LoginPage = () => {
-  return <div>login page</div>;
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <LoginForm />
+    </div>
+  );
 };
