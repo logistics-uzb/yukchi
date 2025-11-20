@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Spin, Typography } from "antd";
 import { loadPostFields } from "./form-fields";
 import { usePostLoadMutation } from "@entities/post-load";
@@ -29,7 +30,8 @@ export const LoadPostForm = () => {
   const to = Form.useWatch("to", form);
 
   // Memoized fields (prevents remount on every render)
-  const fields = useMemo(() => loadPostFields(from, to), [from, to]);
+  // const fields = useMemo(() => loadPostFields(from, to), [from, to]);
+  const fields = useMemo(() => loadPostFields(), [from, to]);
 
   const initialValues: Partial<LoadPostFormValues> = {
     phone_number: "999999999",
@@ -40,18 +42,15 @@ export const LoadPostForm = () => {
   const handleSubmit = async () => {
     const values = form.getFieldsValue();
     try {
-      console.log("Submitted values:", values);
-
       const response = await postLoad(values).unwrap();
-
-      console.log("Success:", response);
-      // show success message if needed
-      // message.success("Load created!");
     } catch (error: any) {
       console.error("Submit failed:", error);
-      // message.error(error?.data?.message || "Failed to create load");
+    } finally {
+      form.resetFields();
     }
   };
+
+  console.log(isLoading, "ialo");
 
   const handleReset = useCallback(() => {
     form.resetFields();
@@ -71,7 +70,7 @@ export const LoadPostForm = () => {
         Create Load
       </Typography.Title>
 
-      <Spin tip="Loading" spinning={isLoading}>
+      <Spin spinning={isLoading}>
         <Row gutter={[16, 16]}>
           {fields.map(({ span, label, name, rules, render }) => (
             <Col span={span} key={name}>

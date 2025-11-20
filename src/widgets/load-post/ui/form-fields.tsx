@@ -1,25 +1,26 @@
 import { Input, Select } from "antd";
 import { currencyOptions } from "@shared/model/consts";
-import { uzRegions } from "@shared/model/consts/uz-regions";
+// import { uzRegions } from "@shared/model/consts/uz-regions";
 
-const vehicleTypes = [
-  { value: "car", label: "Car" },
-  { value: "motorcycle", label: "Motorcycle" },
-];
+// const vehicleTypes = [
+//   { value: "car", label: "Car" },
+//   { value: "motorcycle", label: "Motorcycle" },
+// ];
 
-const vehicleBodyTypes = [
-  { value: "sedan", label: "Sedan" },
-  { value: "hatchback", label: "Hatchback" },
-  { value: "suv", label: "SUV" },
-  { value: "truck", label: "Truck" },
-];
+// const vehicleBodyTypes = [
+//   { value: "sedan", label: "Sedan" },
+//   { value: "hatchback", label: "Hatchback" },
+//   { value: "suv", label: "SUV" },
+//   { value: "truck", label: "Truck" },
+// ];
 
 const paymentTypes = [
   { value: "cash", label: "Cash" },
   { value: "online", label: "Online" },
 ];
 
-export const loadPostFields = (fromValue?: string, toValue?: string) => [
+// export const loadPostFields = (fromValue?: string, toValue?: string) => [
+export const loadPostFields = () => [
   // {
   //   span: 12,
   //   label: "From",

@@ -6,6 +6,7 @@ const BASE_URL = "https://logistics.coachingzona.uz/v1/";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
+  tagTypes: ["Loads"],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {

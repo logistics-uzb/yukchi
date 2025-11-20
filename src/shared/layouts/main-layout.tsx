@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ALL_ROUTES } from "@shared/model/consts";
 import { getLocalStorage } from "@shared/model/helpers";
 import { ContentWrapper } from "@shared/ui/content-wrapper";

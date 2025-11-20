@@ -8,8 +8,17 @@ export const postApi = baseApi.injectEndpoints({
         method: API_METHODS.POST,
         body,
       }),
+      invalidatesTags: ["Loads"],
+    }),
+
+    getLoads: builder.query({
+      query: () => ({
+        url: API_MAP.GET_LOADS,
+        method: API_METHODS.GET,
+      }),
+      providesTags: ["Loads"],
     }),
   }),
 });
 
-export const { usePostLoadMutation } = postApi;
+export const { useGetLoadsQuery, usePostLoadMutation } = postApi;

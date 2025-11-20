@@ -1,1 +1,1 @@
-export { usePostLoadMutation } from "./api";
+export { useGetLoadsQuery, usePostLoadMutation } from "./api";
