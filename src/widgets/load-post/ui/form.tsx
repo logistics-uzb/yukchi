@@ -43,6 +43,7 @@ export const LoadPostForm = () => {
     const values = form.getFieldsValue();
     try {
       const response = await postLoad(values).unwrap();
+      console.log(response);
     } catch (error: any) {
       console.error("Submit failed:", error);
     } finally {
