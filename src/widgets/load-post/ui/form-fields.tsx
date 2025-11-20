@@ -1,5 +1,6 @@
 import { Input, Select } from "antd";
-import { currencyOptions, uzbRegions } from "@shared/model/consts";
+import { currencyOptions } from "@shared/model/consts";
+import { uzRegions } from "@shared/model/consts/uz-regions";
 
 const vehicleTypes = [
   { value: "car", label: "Car" },
@@ -19,29 +20,31 @@ const paymentTypes = [
 ];
 
 export const loadPostFields = (fromValue?: string, toValue?: string) => [
+  // {
+  //   span: 12,
+  //   label: "From",
+  //   name: "from",
+  //   rules: [{ required: true }],
+  //   render: (
+  //     <Select
+  //       placeholder="Select region"
+  //       options={uzRegions.filter((r) => r.value !== toValue)}
+  //     />
+  //   ),
+  // },
   {
     span: 12,
     label: "From",
     name: "from",
     rules: [{ required: true }],
-    render: (
-      <Select
-        placeholder="Select region"
-        options={uzbRegions.filter((r) => r.value !== toValue)}
-      />
-    ),
+    render: <Input />,
   },
   {
     span: 12,
     label: "To",
     name: "to",
     rules: [{ required: true }],
-    render: (
-      <Select
-        placeholder="Select region"
-        options={uzbRegions.filter((r) => r.value !== fromValue)}
-      />
-    ),
+    render: <Input />,
   },
   {
     span: 12,
@@ -62,14 +65,14 @@ export const loadPostFields = (fromValue?: string, toValue?: string) => [
     label: "Vehicle Type",
     name: "vehicleType",
     rules: [{ required: true }],
-    render: <Select options={vehicleTypes} />,
+    render: <Input />,
   },
   {
     span: 12,
     label: "Vehicle Body Type",
     name: "vehicleBodyType",
     rules: [{ required: true }],
-    render: <Select options={vehicleBodyTypes} />,
+    render: <Input />,
   },
   {
     span: 12,

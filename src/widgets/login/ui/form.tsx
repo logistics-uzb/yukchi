@@ -1,16 +1,32 @@
+import { useLoginMutation } from "@entities/login/api";
 import { Button, Form, Input, Typography } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useNavigate } from "react-router";
 
 export const LoginForm = () => {
   const [form] = useForm();
+  const [login] = useLoginMutation();
 
   const navigate = useNavigate();
-  const handleFormSubmit = () => {
-    const formValues = form.getFieldsValue();
-    navigate("/load-post");
 
-    console.log(formValues, "formcvalues");
+  const handleFormSubmit = async () => {
+    const formValues = form.getFieldsValue();
+    console.log(formValues, "fornvalues");
+
+    const res = await login({
+      username: formValues.username,
+      password: formValues.password,
+    });
+
+    const token = res.data?.access_token;
+    if (token) {
+      localStorage.setItem("token", token);
+      navigate("/load-post");
+    }
+
+    console.log(res, "formcvalues");
+
+    // navigate("/load-post");
   };
   return (
     <Form
@@ -24,9 +40,9 @@ export const LoginForm = () => {
         Login
       </Typography.Title>
       <Form.Item
-        label="Phone Number"
-        name="phone"
-        rules={[{ required: true, message: "Please input your phone number!" }]}
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: "Please input your username!" }]}
       >
         <Input />
       </Form.Item>

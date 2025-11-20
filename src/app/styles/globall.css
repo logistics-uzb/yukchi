@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-border: #0505050F;
+}
+
 * {
   margin: 0;
   padding: 0;

@@ -1,2 +1,2 @@
-export { uzbRegions } from "./uzb-regions-options";
 export { currencyOptions } from "./currency-options";
+export { ALL_ROUTES } from "./all-routes";

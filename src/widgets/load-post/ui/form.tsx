@@ -1,61 +1,109 @@
-import { Button, Col, Form, Row, Typography } from "antd";
+import { Button, Col, Form, Row, Spin, Typography } from "antd";
 import { loadPostFields } from "./form-fields";
+import { usePostLoadMutation } from "@entities/post-load";
+import { useCallback, useMemo } from "react";
+
+// === Types ===
+interface LoadPostFormValues {
+  title?: string;
+  from?: string;
+  to?: string;
+  phone_number: string;
+  weight?: string;
+  pickupDate?: string;
+  pickupTime?: string;
+  vehicleType?: string;
+  vehicleBodyType?: string;
+  paymentType?: string;
+  paymentAmount?: string;
+  paymentCurrency: string;
+  description?: string;
+}
 
 export const LoadPostForm = () => {
-  const [form] = Form.useForm();
-  const fromValue = Form.useWatch("from", form);
-  const toValue = Form.useWatch("to", form);
+  const [form] = Form.useForm<LoadPostFormValues>();
+  const [postLoad, { isLoading }] = usePostLoadMutation();
 
-  const fields = loadPostFields(fromValue, toValue);
+  // Watch fields that affect others
+  const from = Form.useWatch("from", form);
+  const to = Form.useWatch("to", form);
 
-  const handleFormSubmit = () => {
-    const formValues = form.getFieldsValue();
-    console.log(formValues, "formcvalues");
-  };
+  // Memoized fields (prevents remount on every render)
+  const fields = useMemo(() => loadPostFields(from, to), [from, to]);
 
-  const handleResetClick = () => {
-    form.resetFields();
-  };
-
-  const formInitialValues = {
+  const initialValues: Partial<LoadPostFormValues> = {
     phone_number: "999999999",
     paymentCurrency: "usd",
   };
+
+  // Stable handler (no re-renders)
+  const handleSubmit = async () => {
+    const values = form.getFieldsValue();
+    try {
+      console.log("Submitted values:", values);
+
+      const response = await postLoad(values).unwrap();
+
+      console.log("Success:", response);
+      // show success message if needed
+      // message.success("Load created!");
+    } catch (error: any) {
+      console.error("Submit failed:", error);
+      // message.error(error?.data?.message || "Failed to create load");
+    }
+  };
+
+  const handleReset = useCallback(() => {
+    form.resetFields();
+  }, [form]);
 
   return (
     <Form
       form={form}
       layout="vertical"
       name="load-post-form"
+      initialValues={initialValues}
       className="w-[700px]"
       autoComplete="off"
-      initialValues={formInitialValues}
-      onFinish={handleFormSubmit}
+      onFinish={handleSubmit}
     >
       <Typography.Title level={3} className="text-center">
         Create Load
       </Typography.Title>
 
-      <Row gutter={[16, 16]}>
-        {fields.map(({ span, label, name, rules, render }) => (
-          <Col span={span} key={name}>
-            <Form.Item label={label} name={name} rules={rules}>
-              {render}
-            </Form.Item>
-          </Col>
-        ))}
+      <Spin tip="Loading" spinning={isLoading}>
+        <Row gutter={[16, 16]}>
+          {fields.map(({ span, label, name, rules, render }) => (
+            <Col span={span} key={name}>
+              <Form.Item label={label} name={name} rules={rules}>
+                {render}
+              </Form.Item>
+            </Col>
+          ))}
 
-        <Col span={8}>
-          <Button type="dashed" className="w-full" onClick={handleResetClick}>
-            Rest
-          </Button>
-        </Col>
-        <Col span={16}>
-          <Button type="primary" htmlType="submit" className="w-full">
-            Submit
-          </Button>
-        </Col>
-      </Row>
+          <Col span={8}>
+            <Button
+              type="dashed"
+              className="w-full"
+              onClick={handleReset}
+              disabled={isLoading}
+            >
+              Reset
+            </Button>
+          </Col>
+
+          <Col span={16}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+              loading={isLoading}
+            >
+              Submit
+            </Button>
+          </Col>
+        </Row>
+      </Spin>
     </Form>
   );
 };
