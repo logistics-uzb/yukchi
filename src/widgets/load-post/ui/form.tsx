@@ -34,7 +34,7 @@ export const LoadPostForm = () => {
   const fields = useMemo(() => loadPostFields(), [from, to]);
 
   const initialValues: Partial<LoadPostFormValues> = {
-    phone_number: "889649001",
+    phone_number: "947992979",
     paymentCurrency: "usd",
   };
 
