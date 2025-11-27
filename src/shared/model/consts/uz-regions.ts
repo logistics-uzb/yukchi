@@ -1,0 +1,16 @@
+export const uzRegions = [
+  { label: "Toshkent shahri", value: "tashkent_city" },
+  { label: "Toshkent viloyati", value: "tashkent_region" },
+  { label: "Andijon viloyati", value: "andijan" },
+  { label: "Farg‘ona viloyati", value: "fergana" },
+  { label: "Namangan viloyati", value: "namangan" },
+  { label: "Samarqand viloyati", value: "samarkand" },
+  { label: "Buxoro viloyati", value: "bukhara" },
+  { label: "Xorazm viloyati", value: "khorezm" },
+  { label: "Navoiy viloyati", value: "navoiy" },
+  { label: "Qashqadaryo viloyati", value: "kashkadarya" },
+  { label: "Surxondaryo viloyati", value: "surkhandarya" },
+  { label: "Jizzax viloyati", value: "jizzakh" },
+  { label: "Sirdaryo viloyati", value: "syrdarya" },
+  { label: "Qoraqalpog‘iston Respublikasi", value: "karakalpakstan" },
+];

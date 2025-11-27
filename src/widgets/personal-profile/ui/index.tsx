@@ -1,19 +1,22 @@
 import { Avatar, Popover } from "antd";
+import { Modal } from "./modal";
+import { getInitials } from "@shared/model/helpers";
 
 export const PersonalProfile = () => {
-  const content = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
-    </div>
-  );
   return (
-    <Popover content={content} title="Title" trigger="click">
-      <Avatar
-        src="https://joeschmoe.io/api/v1/random"
-        className="cursor-pointer select-none"
-      >
-        UM
+    <Popover
+      arrow={false}
+      content={
+        <Modal
+          username="umirzakov"
+          fullName="Umirzakov Muhammadyosin"
+          number="993002399"
+        />
+      }
+      trigger="click"
+    >
+      <Avatar className="cursor-pointer select-none">
+        {getInitials("Umirzakov Muhammadyosin")}
       </Avatar>
     </Popover>
   );

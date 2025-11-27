@@ -1,18 +1,16 @@
-import { loadPostFields } from "@widgets/load-post";
 import type { TableProps } from "antd";
 import { Button, Space } from "antd";
 
 type LoadPostRecord = Record<string, unknown>;
 
 // Base columns from form fields
-const baseColumns: TableProps<LoadPostRecord>["columns"] = loadPostFields().map(
-  ({ label, name }) => ({
-    title: label,
-    dataIndex: name,
-    key: name,
-  })
-);
-
+const baseColumns: TableProps<LoadPostRecord>["columns"] = [
+  {
+    title: "Lorem",
+    dataIndex: "lorem",
+    key: "lorem",
+  },
+];
 export const loadPostColumns: TableProps<LoadPostRecord>["columns"] = [
   {
     title: "№",

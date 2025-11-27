@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getLocalStorage } from "../helpers";
 
-const BASE_URL = "https://logistics.coachingzona.uz/v1/";
+const BASE_URL = import.meta.env.BASE_URL;
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
