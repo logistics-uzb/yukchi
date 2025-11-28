@@ -1,0 +1,10 @@
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BASE_URL
+    ports:
+      - "4000:80"
+    restart: unless-stopped
