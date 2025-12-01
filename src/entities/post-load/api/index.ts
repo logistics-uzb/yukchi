@@ -12,9 +12,10 @@ export const postApi = baseApi.injectEndpoints({
     }),
 
     getLoads: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: API_MAP.GET_LOADS,
         method: API_METHODS.GET,
+        params,
       }),
       providesTags: ["Loads"],
     }),

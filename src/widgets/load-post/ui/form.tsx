@@ -4,6 +4,7 @@ import { currencyOptions } from "@shared/model/consts";
 import { countries } from "@shared/model/consts/countries-with-regions";
 import { usePostLoadMutation } from "@entities/post-load";
 import { useCallback } from "react";
+import { getLocalStorage } from "@shared/model/helpers";
 
 interface LoadFormValues {
   countryFrom: string;
@@ -26,9 +27,10 @@ interface LoadFormValues {
 export const LoadPostForm = () => {
   const [form] = Form.useForm<LoadFormValues>();
   const [postLoad, { isLoading }] = usePostLoadMutation();
+  const userPhoneNumber = getLocalStorage("phone_number");
 
   const initialValues: Partial<LoadFormValues> = {
-    phone_number: "947992979",
+    phone_number: userPhoneNumber?.slice(4) || "",
     paymentCurrency: "usd",
   };
 

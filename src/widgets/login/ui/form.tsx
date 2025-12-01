@@ -18,9 +18,12 @@ export const LoginForm = () => {
       password: formValues.password,
     });
 
-    const token = res.data?.access_token;
-    if (token) {
-      localStorage.setItem("token", token);
+    const { access_token, phone_number } = res?.data?.data || {};
+
+    if (access_token) {
+      localStorage.setItem("token", access_token);
+      localStorage.setItem("phone_number", phone_number);
+
       navigate("/load-post");
     }
 

@@ -1,5 +1,5 @@
 import { getInitials } from "@shared/model/helpers";
-import { Avatar, Button, Divider } from "antd";
+import { Avatar } from "antd";
 
 interface Props {
   fullName: string;
