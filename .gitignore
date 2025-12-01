@@ -11,6 +11,9 @@ node_modules
 .env
 dist
 dist-ssr
+docker-compose-dev.yml
+docker-compose-prod.yml
+Dockerfile
 *.local
 
 # Editor directories and files
