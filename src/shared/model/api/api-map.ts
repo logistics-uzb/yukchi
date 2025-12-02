@@ -1,6 +1,8 @@
 export const API_MAP = {
-  LOGIN: "/login",
+  LOGIN: "login",
+  GET_USER_INFO: "me",
 
-  POST_LOAD: "order",
   GET_LOADS: "order",
+  POST_LOAD: "order",
+  DELETE_LOAD: "order",
 };

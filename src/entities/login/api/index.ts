@@ -1,4 +1,6 @@
 import { API_MAP, API_METHODS, baseApi } from "@shared/model/api";
+import type { IBaseResponse } from "@shared/model/types/base-response";
+import type { IUserInfoResponse } from "@shared/model/types/user-info-response";
 
 interface ILogin {
   username: string;
@@ -14,7 +16,15 @@ export const userApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+
+    getUserInfo: builder.query({
+      query: () => ({
+        url: API_MAP.GET_USER_INFO,
+        method: API_METHODS.GET,
+      }),
+      transformResponse: (response: IBaseResponse<IUserInfoResponse>) => response?.data,
+    }),
   }),
 });
 
-export const { useLoginMutation } = userApi;
+export const { useLoginMutation, useGetUserInfoQuery } = userApi;

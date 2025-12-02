@@ -11,6 +11,7 @@ interface Props {
 export const Modal = ({ fullName, username, number }: Props) => {
   const navigate = useNavigate();
   const handleLogout = () => {
+    window.location.reload();
     localStorage.clear();
     navigate("/login");
   };

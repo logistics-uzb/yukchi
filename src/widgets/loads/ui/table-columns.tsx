@@ -1,7 +1,9 @@
+import type { ILoadResponse } from "@shared/model/types";
 import type { TableProps } from "antd";
 import { Button, Space } from "antd";
+import { useMemo } from "react";
 
-type LoadPostRecord = Record<string, unknown>;
+type LoadPostRecord = ILoadResponse;
 
 // Base columns from form fields
 const baseColumns: TableProps<LoadPostRecord>["columns"] = [
@@ -56,33 +58,45 @@ const baseColumns: TableProps<LoadPostRecord>["columns"] = [
     key: "description",
   },
 ];
-export const loadPostColumns: TableProps<LoadPostRecord>["columns"] = [
-  {
-    title: "№",
-    key: "index",
-    render: (_: unknown, __: LoadPostRecord, index: number) => index + 1,
-    width: 60,
-    align: "center",
-  },
-  ...baseColumns,
-  {
-    title: "Manage",
-    key: "manage",
-    fixed: "right",
-    width: 150,
-    render: (_: unknown, record: LoadPostRecord) => (
-      <Space>
-        <Button type="link" onClick={() => console.log("Edit", record)}>
-          Edit
-        </Button>
-        <Button
-          type="link"
-          danger
-          onClick={() => console.log("Delete", record)}
-        >
-          Delete
-        </Button>
-      </Space>
-    ),
-  },
-];
+
+export const useLoadPostColumns = (props?: {
+  onEdit?: (record: ILoadResponse) => void;
+  onDelete?: (record: ILoadResponse) => void;
+}) => {
+  const { onEdit, onDelete } = props || {};
+
+  const columns: TableProps<LoadPostRecord>["columns"] = useMemo(() => {
+    return [
+      {
+        title: "№",
+        key: "index",
+        width: 60,
+        align: "center",
+        render: (_: unknown, __: LoadPostRecord, index: number) => index + 1,
+      },
+
+      // include your shared columns
+      ...baseColumns,
+
+      {
+        title: "Boshqarish",
+        key: "manage",
+        fixed: "right",
+        width: 150,
+        render: (_: unknown, record: ILoadResponse) => (
+          <Space>
+            {/* <Button type="link" onClick={() => onEdit?.(record)}>
+              O'zgartirish
+            </Button> */}
+
+            <Button type="link" danger onClick={() => onDelete?.(record)}>
+              O'chirish
+            </Button>
+          </Space>
+        ),
+      },
+    ];
+  }, [onEdit, onDelete]);
+
+  return { columns };
+};

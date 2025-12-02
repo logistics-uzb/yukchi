@@ -1,1 +1,1 @@
-export { loadPostColumns } from "./ui/table-columns";
+export { useLoadPostColumns } from "./ui/table-columns";

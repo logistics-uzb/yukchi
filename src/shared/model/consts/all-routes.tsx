@@ -6,13 +6,13 @@ export const ALL_ROUTES = [
   {
     path: "/",
     element: <Loads />,
-    title: "Loads",
+    title: "Yuklar",
     icon: <FileDoneOutlined />,
   },
   {
     path: "/load-post",
     element: <LoadPost />,
-    title: "Create load",
+    title: "Yuk qo'shish",
     icon: <PlusOutlined />,
   },
 ];
