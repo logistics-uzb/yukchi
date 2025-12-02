@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: #0505050F;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif !important;
+}
+
+.borderr {
+  border: 1px solid red !important;
+}
