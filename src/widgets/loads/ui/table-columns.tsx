@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type { ILoadResponse } from "@shared/model/types";
 import type { TableProps } from "antd";
 import { Button, Space } from "antd";

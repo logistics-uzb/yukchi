@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Spin, Typography, Input, Select } from "antd";
 import { currencyOptions } from "@shared/model/consts";
 import { countries } from "@shared/model/consts/countries";
