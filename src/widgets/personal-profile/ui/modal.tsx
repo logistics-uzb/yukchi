@@ -1,5 +1,6 @@
 import { getInitials } from "@shared/model/helpers";
-import { Avatar } from "antd";
+import { Avatar, Button, Divider } from "antd";
+import { useNavigate } from "react-router";
 
 interface Props {
   fullName: string;
@@ -8,6 +9,11 @@ interface Props {
 }
 
 export const Modal = ({ fullName, username, number }: Props) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div className="flex flex-col items-center text-center">
       <Avatar size={50} className="">
@@ -18,11 +24,11 @@ export const Modal = ({ fullName, username, number }: Props) => {
       <p className="text-gray-500">{number}</p>
       <p className="text-gray-500">@{username}</p>
 
-      {/* <Divider />
+      <Divider />
 
-      <Button type="primary" block>
-        Edit Profile
-      </Button> */}
+      <Button type="primary" block onClick={handleLogout}>
+        Chiqish
+      </Button>
     </div>
   );
 };
