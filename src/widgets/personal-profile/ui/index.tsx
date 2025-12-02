@@ -1,16 +1,20 @@
 import { Avatar, Popover } from "antd";
 import { Modal } from "./modal";
 import { getInitials } from "@shared/model/helpers";
+import { useGetUserInfoQuery } from "@entities/login";
 
 export const PersonalProfile = () => {
+  const { data } = useGetUserInfoQuery({});
+  const { username, full_name, phone_number } = data || {};
+
   return (
     <Popover
       arrow={false}
       content={
         <Modal
-          username="umirzakov"
-          fullName="Umirzakov Muhammadyosin"
-          number="993002399"
+          username={username || ""}
+          fullName={full_name || ""}
+          number={phone_number || ""}
         />
       }
       trigger="click"

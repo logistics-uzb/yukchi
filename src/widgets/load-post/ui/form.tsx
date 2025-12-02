@@ -1,48 +1,36 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Spin, Typography, Input, Select } from "antd";
 import { currencyOptions } from "@shared/model/consts";
-import { countries } from "@shared/model/consts/countries-with-regions";
+import { countries } from "@shared/model/consts/countries";
 import { usePostLoadMutation } from "@entities/post-load";
 import { useCallback } from "react";
 import { getLocalStorage } from "@shared/model/helpers";
-
-interface LoadFormValues {
-  countryFrom: string;
-  regionFrom: string;
-  countryTo: string;
-  regionTo: string;
-  title: string;
-  weight: string;
-  capacity?: string;
-  vehicleType: string;
-  vehicleBodyType?: string;
-  paymentType?: "cash" | "online" | "combo";
-  paymentAmount?: string;
-  paymentCurrency?: "usd" | "sum";
-  pickupDate: string;
-  phone_number: string;
-  description?: string;
-}
+import { CARGO_UNIT_OPTIONS } from "../model/consts";
+import { useWatch } from "antd/es/form/Form";
+import type { IBaseLoad } from "@shared/model/types";
 
 export const LoadPostForm = () => {
-  const [form] = Form.useForm<LoadFormValues>();
+  const [form] = Form.useForm<IBaseLoad>();
   const [postLoad, { isLoading }] = usePostLoadMutation();
   const userPhoneNumber = getLocalStorage("phone_number");
 
-  const initialValues: Partial<LoadFormValues> = {
+  const initialValues: Partial<IBaseLoad> = {
     phone_number: userPhoneNumber?.slice(4) || "",
     paymentCurrency: "usd",
+    cargoUnit: "tons",
   };
 
-  const countryFromValue = Form.useWatch("countryFrom", form);
-  const countryToValue = Form.useWatch("countryTo", form);
+  const cargoUnitValue = useWatch("cargoUnit", form);
 
   const handleSubmit = async () => {
     const values = form.getFieldsValue();
     console.log(values);
+    const transformedValues = {
+      ...values,
+      phone_number: `+998${values.phone_number}`,
+    }
 
     try {
-      const response = await postLoad(values).unwrap();
+      const response = await postLoad(transformedValues).unwrap();
       console.log(response);
     } catch (error: any) {
       console.error("Submit failed:", error);
@@ -50,9 +38,6 @@ export const LoadPostForm = () => {
       form.resetFields();
     }
   };
-
-  const lorem = form.getFieldValue("countryFrom");
-  console.log(lorem);
 
   const handleReset = useCallback(() => {
     form.resetFields();
@@ -87,30 +72,16 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
-
           {/* From Region */}
-          {countryFromValue === "uzbekistan" ? (
-            <Col span={6}>
-              <Form.Item
-                label="Qaysi viloyatdan"
-                name="regionFrom"
-                rules={[{ required: true }]}
-              >
-                <Select showSearch options={countries[0].regions} />
-              </Form.Item>
-            </Col>
-          ) : (
-            <Col span={6}>
-              <Form.Item
-                label="Qaysi viloyatdan"
-                name="regionFrom"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          )}
-
+          <Col span={6}>
+            <Form.Item
+              label="Qaysi viloyatdan"
+              name="regionFrom"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
           {/* To Country */}
           <Col span={6}>
             <Form.Item
@@ -125,55 +96,51 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
-
           {/* To Region */}
-          {countryToValue === "uzbekistan" ? (
-            <Col span={6}>
-              <Form.Item
-                label="Qaysi viloyatdan"
-                name="regionTo"
-                rules={[{ required: true }]}
-              >
-                <Select showSearch options={countries[0].regions} />
-              </Form.Item>
-            </Col>
-          ) : (
-            <Col span={6}>
-              <Form.Item
-                label="Qaysi viloyatdan"
-                name="regionTo"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          )}
-
+          <Col span={6}>
+            <Form.Item
+              label="Qaysi viloyatdan"
+              name="regionTo"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
           {/* Title */}
           <Col span={24}>
             <Form.Item label="Nomi" name="title" rules={[{ required: true }]}>
               <Input placeholder="Taxta, temir, ichimlik..." />
             </Form.Item>
           </Col>
-
           {/* Weight */}
-          <Col span={12}>
+          <Col span={cargoUnitValue === "pallet" ? 12 : 8}>
             <Form.Item
               label="Og'irligi"
               name="weight"
               rules={[{ required: true }]}
             >
-              <Input type="number" addonAfter="tonna" inputMode="numeric" />
+              <Input type="number" inputMode="numeric" />
             </Form.Item>
           </Col>
 
+          {/* Cargo Unit */}
+          <Col span={cargoUnitValue === "pallet" ? 12 : 4}>
+            <Form.Item
+              label="Tonna/Poddon"
+              name="cargoUnit"
+              rules={[{ required: true }]}
+            >
+              <Select options={CARGO_UNIT_OPTIONS} />
+            </Form.Item>
+          </Col>
           {/* Capacity */}
-          <Col span={12}>
-            <Form.Item label="Hajmi" name="capacity">
-              <Input type="number" addonAfter="m³" inputMode="numeric" />
-            </Form.Item>
-          </Col>
-
+          {cargoUnitValue === "tons" && (
+            <Col span={12}>
+              <Form.Item label="Hajmi" name="capacity">
+                <Input type="number" addonAfter="m³" inputMode="numeric" />
+              </Form.Item>
+            </Col>
+          )}
           {/* Vehicle Type */}
           <Col span={12}>
             <Form.Item
@@ -184,14 +151,12 @@ export const LoadPostForm = () => {
               <Input />
             </Form.Item>
           </Col>
-
           {/* Vehicle Body Type */}
           <Col span={12}>
             <Form.Item label="Pritsep turi" name="vehicleBodyType">
               <Input />
             </Form.Item>
           </Col>
-
           {/* Payment Type */}
           <Col span={12}>
             <Form.Item label="To'lov turi" name="paymentType">
@@ -205,21 +170,18 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
-
           {/* Payment Amount */}
           <Col span={9}>
             <Form.Item label="To'lov summasi" name="paymentAmount">
               <Input type="number" inputMode="numeric" />
             </Form.Item>
           </Col>
-
           {/* Payment Currency */}
           <Col span={3}>
             <Form.Item label="Valyuta" name="paymentCurrency">
               <Select options={currencyOptions} />
             </Form.Item>
           </Col>
-
           {/* Pickup Date */}
           <Col span={12}>
             <Form.Item
@@ -230,7 +192,6 @@ export const LoadPostForm = () => {
               <Input type="date" />
             </Form.Item>
           </Col>
-
           {/* Phone */}
           <Col span={12}>
             <Form.Item
@@ -244,21 +205,18 @@ export const LoadPostForm = () => {
               <Input addonBefore="+998" maxLength={9} />
             </Form.Item>
           </Col>
-
           {/* Description */}
           <Col span={24}>
             <Form.Item label="Qo'shimcha ma'lumot" name="description">
               <Input.TextArea allowClear />
             </Form.Item>
           </Col>
-
           {/* Buttons */}
           <Col span={8}>
             <Button type="dashed" onClick={handleReset} className="w-full">
               Reset
             </Button>
           </Col>
-
           <Col span={16}>
             <Button type="primary" htmlType="submit" className="w-full">
               Submit

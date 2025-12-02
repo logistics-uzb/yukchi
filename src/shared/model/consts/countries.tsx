@@ -1,7 +1,7 @@
-import { uzRegions } from "./uz-regions";
-
 export const countries = [
-  { label: "O‘zbekiston", value: "uzbekistan", regions: uzRegions },
+  { label: "O‘zbekiston", value: "uzbekistan" },
+  { label: "Rossiya", value: "russia" },
+  { label: "Belarusiya", value: "belarus" },
   { label: "Qozog‘iston", value: "kazakhstan" },
   { label: "Xitoy", value: "china" },
   { label: "Turkiya", value: "turkey" },

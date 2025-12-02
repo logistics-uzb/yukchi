@@ -1,1 +1,1 @@
-export { useLoginMutation } from "./api";
+export { useLoginMutation, useGetUserInfoQuery } from "./api";
