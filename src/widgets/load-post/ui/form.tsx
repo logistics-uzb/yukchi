@@ -27,7 +27,7 @@ export const LoadPostForm = () => {
     const transformedValues = {
       ...values,
       phone_number: `+998${values.phone_number}`,
-    }
+    };
 
     try {
       const response = await postLoad(transformedValues).unwrap();
@@ -49,7 +49,7 @@ export const LoadPostForm = () => {
       layout="vertical"
       initialValues={initialValues}
       onFinish={handleSubmit}
-      className="w-[700px]"
+      className="w-full max-w-[900px] mx-auto"
     >
       <Typography.Title level={3} className="text-center">
         Yuk yuborish
@@ -58,7 +58,7 @@ export const LoadPostForm = () => {
       <Spin spinning={isLoading}>
         <Row gutter={[16, 16]}>
           {/* From Country */}
-          <Col span={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <Form.Item
               label="Qaysi davlatdan"
               name="countryFrom"
@@ -72,8 +72,9 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
+
           {/* From Region */}
-          <Col span={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <Form.Item
               label="Qaysi viloyatdan"
               name="regionFrom"
@@ -82,8 +83,9 @@ export const LoadPostForm = () => {
               <Input />
             </Form.Item>
           </Col>
+
           {/* To Country */}
-          <Col span={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <Form.Item
               label="Qaysi davlatga"
               name="countryTo"
@@ -96,8 +98,9 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
+
           {/* To Region */}
-          <Col span={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <Form.Item
               label="Qaysi viloyatdan"
               name="regionTo"
@@ -106,25 +109,27 @@ export const LoadPostForm = () => {
               <Input />
             </Form.Item>
           </Col>
+
           {/* Title */}
-          <Col span={24}>
+          <Col xs={24}>
             <Form.Item label="Nomi" name="title" rules={[{ required: true }]}>
               <Input placeholder="Taxta, temir, ichimlik..." />
             </Form.Item>
           </Col>
+
           {/* Weight */}
-          <Col span={cargoUnitValue === "pallet" ? 12 : 8}>
+          <Col xs={24} sm={12} md={cargoUnitValue === "pallet" ? 12 : 8}>
             <Form.Item
               label="Og'irligi"
               name="weight"
               rules={[{ required: true }]}
             >
-              <Input type="number" inputMode="numeric" />
+              <Input type="number" />
             </Form.Item>
           </Col>
 
           {/* Cargo Unit */}
-          <Col span={cargoUnitValue === "pallet" ? 12 : 4}>
+          <Col xs={24} sm={12} md={cargoUnitValue === "pallet" ? 12 : 4}>
             <Form.Item
               label="Tonna/Poddon"
               name="cargoUnit"
@@ -133,16 +138,18 @@ export const LoadPostForm = () => {
               <Select options={CARGO_UNIT_OPTIONS} />
             </Form.Item>
           </Col>
+
           {/* Capacity */}
           {cargoUnitValue === "tons" && (
-            <Col span={12}>
+            <Col xs={24} sm={12} md={12}>
               <Form.Item label="Hajmi" name="capacity">
                 <Input type="number" addonAfter="m³" inputMode="numeric" />
               </Form.Item>
             </Col>
           )}
+
           {/* Vehicle Type */}
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               label="Transport turi"
               name="vehicleType"
@@ -151,14 +158,16 @@ export const LoadPostForm = () => {
               <Input />
             </Form.Item>
           </Col>
+
           {/* Vehicle Body Type */}
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item label="Pritsep turi" name="vehicleBodyType">
               <Input />
             </Form.Item>
           </Col>
+
           {/* Payment Type */}
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item label="To'lov turi" name="paymentType">
               <Select
                 showSearch
@@ -170,20 +179,23 @@ export const LoadPostForm = () => {
               />
             </Form.Item>
           </Col>
+
           {/* Payment Amount */}
-          <Col span={9}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item label="To'lov summasi" name="paymentAmount">
               <Input type="number" inputMode="numeric" />
             </Form.Item>
           </Col>
+
           {/* Payment Currency */}
-          <Col span={3}>
+          <Col xs={24} sm={12} md={4}>
             <Form.Item label="Valyuta" name="paymentCurrency">
               <Select options={currencyOptions} />
             </Form.Item>
           </Col>
+
           {/* Pickup Date */}
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               label="Yuklash vaqti"
               name="pickupDate"
@@ -192,8 +204,9 @@ export const LoadPostForm = () => {
               <Input type="date" />
             </Form.Item>
           </Col>
-          {/* Phone */}
-          <Col span={12}>
+
+          {/* Phone Number */}
+          <Col xs={24} sm={12}>
             <Form.Item
               label="Broker raqami"
               name="phone_number"
@@ -205,19 +218,22 @@ export const LoadPostForm = () => {
               <Input addonBefore="+998" maxLength={9} />
             </Form.Item>
           </Col>
+
           {/* Description */}
-          <Col span={24}>
+          <Col xs={24}>
             <Form.Item label="Qo'shimcha ma'lumot" name="description">
               <Input.TextArea allowClear />
             </Form.Item>
           </Col>
+
           {/* Buttons */}
-          <Col span={8}>
+          <Col xs={24} sm={8}>
             <Button type="dashed" onClick={handleReset} className="w-full">
               Reset
             </Button>
           </Col>
-          <Col span={16}>
+
+          <Col xs={24} sm={16}>
             <Button type="primary" htmlType="submit" className="w-full">
               Submit
             </Button>
