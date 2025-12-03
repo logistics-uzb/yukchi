@@ -124,7 +124,7 @@ export const LoadPostForm = () => {
               name="weight"
               rules={[{ required: true }]}
             >
-              <Input type="number" inputMode="numeric" />
+              <Input type="number" />
             </Form.Item>
           </Col>
 
