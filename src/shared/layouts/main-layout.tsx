@@ -91,7 +91,12 @@ export const MainLayout = () => {
             open={drawerVisible}
             bodyStyle={{ padding: 0 }}
           >
-            <Menu mode="inline" defaultSelectedKeys={["1"]} items={menuItems} />
+            <Menu
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              onClick={handleMenuClick}
+            />
           </Drawer>
         )}
 
