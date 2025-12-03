@@ -21,6 +21,7 @@ export const MainLayout = () => {
   const token = getLocalStorage("token");
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const width = window.innerWidth;
 
   // Navigate to login page if no token
   useEffect(() => {
@@ -42,11 +43,11 @@ export const MainLayout = () => {
       <Header />
       <Flex>
         <Menu
+          hidden={width > 450 ? false : true}
           mode="inline"
           items={menuItems}
           onClick={handleMenuClick}
           selectedKeys={[pathname]}
-          style={{ width: 256, height: "calc(100vh - 60px)" }}
         />
         <ContentWrapper title={targetRoute.title}>
           <Outlet />
